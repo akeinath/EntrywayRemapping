@@ -1,0 +1,9 @@
+function [isIn isMostRecent indexSinceIn distanceSinceIn indexSinceOut distanceSinceOut] = isInROI(p,roi)
+    isIn = [bsxfun(@gt,repmat(p(1,:),[length(roi(1,:)) 1]),roi(1,:)') & ...
+        bsxfun(@lt,repmat(p(1,:),[length(roi(1,:)) 1]),[roi(1,:)+roi(3,:)]') & ...
+        bsxfun(@gt,repmat(p(2,:),[length(roi(2,:)) 1]),roi(2,:)') & ...
+        bsxfun(@lt,repmat(p(2,:),[length(roi(1,:)) 1]),[roi(2,:)+roi(4,:)]')];
+    
+    [isMostRecent indexSinceIn distanceSinceIn] = getSinceIn(isIn,p);
+    [blah indexSinceOut distanceSinceOut] = getSinceIn(~isIn,p);
+end
